@@ -1,0 +1,20 @@
+﻿<!-- сцобака model IEnumerable<string> через ViewBag-->
+@model SportsStore.WebUI.Models.SelectedCategoryModel
+
+<!--Home-buttons name, List-method, Product-controller, сцобака(отделить от ключ.слова html) class-произвольное имя поля анонимного объекта -->
+@Html.ActionLink("Home", "List", "Product", null, new { @class = "btn btn-block btn-default btn-lg" })
+
+<!--next buttons after button Home-->
+<!-- сцобака foreach (var linkCategoty in Model) через ViewBag-->
+@foreach(var linkCategory in Model.categories)
+{
+@Html.RouteLink(linkCategory, new{
+    controller="Product",
+    action="List",
+    category= linkCategory, //атрибуту кнопки передаем категорию---> при последующем нажатии она полетит в параметр List
+    page= 1                 //атрибуту кнопки передаем номер страницы---> при последующем нажатии она полетит в параметр List
+}, new {@class="btn btn-block btn-default btn-lg"
+               // +(linkCategory == ViewBag.SelectedCategory ?" btn-primary":"") //!--пробел перед btn-primary не забудь
+               + (linkCategory == Model.selectedCategory  ?" btn-primary":"")
+})
+}

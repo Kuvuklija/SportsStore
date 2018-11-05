@@ -1,0 +1,28 @@
+﻿<!--сцобака model SportsStore.Domain.Entities.Product сюда список из контроллера передается, а не один продукт-->
+<!--сцобака using SportsStore.Domain.Entities ---не надобно, т.к. передаем объект-->
+<!--сцобака model IEnumerable<Product>        ---не надобно, т.к. передаем объект-->
+
+@model SportsStore.WebUI.Models.ProductListViewModel
+
+@{
+    ViewBag.Title = "Products";
+}
+
+<!--сцобака foreach (var p in Model) не надобно, т.к. передаем объект-->
+@foreach (var p in Model.products)
+{
+    <!-- перенесли в частичное представление ProductSummary <div class="well">
+        <h3>
+        <strong> сцобака p.Name</strong>
+        <span class="pull-right label label-primary">сцобака p.Price.ToString("c")</span>
+        </h3>
+        <span class="lead">сцобака p.Description</span>
+    </div>-->
+    @Html.Partial("ProductSummary",p) <!--вызов частичного представления класса PagingHelper-->
+}
+
+<!--вызов расширяющего метода-->
+    <div class="btn btn-group pull-right">
+        <!--в Url создаются три ссылки с проставленными номерами страниц(page=1,2,3).При нажатии на ссылку, выбранный page передается в контроллер-->
+        @Html.PageLinks(Model.pagingInfo, x => Url.Action("List", new { page = x, category=Model.currentCategory }))
+    </div>

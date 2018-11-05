@@ -1,0 +1,23 @@
+﻿@model SportsStore.Domain.Entities.Product
+
+<div data-role="collapsible" data-collapsed="false" data-content-theme="c">
+    <h2>
+        <strong>@Model.Name</strong>
+    </h2>
+    <div class="ui-grid-b"> <!--свертка содержимого-->
+        <div class="ui-block-a">
+           @Model.Description
+        </div>
+        <div class="ui-block-b">
+            <strong>@Model.Price.ToString("c")</strong>
+        </div>
+        <div class="ui-block-c">
+            @using (Html.BeginForm("AddToCart", "Cart"))
+            {
+                @Html.HiddenFor(x => x.ProductID) <!--скрытое поле ввода для ввода значения, определенного в выражении-->
+                @Html.Hidden("returnUrl", Request.Url.PathAndQuery) <!--Url текущей страницы для возврата из корзины обратно в список товаров-->
+            <input type="submit" data-inline="true" data-mini="true" value="Add to cart" />
+            }
+        </div>
+    </div>
+</div>
